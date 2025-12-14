@@ -1,4 +1,4 @@
-use crate::models::{CreateUser, User};
+use crate::models::{CreateUser, Response, User};
 use axum::{extract::State, Json};
 use sqlx::PgPool;
 use uuid::Uuid;
@@ -28,4 +28,12 @@ pub async fn get_all_user(State(pool): State<PgPool>) -> Json<Vec<User>> {
         .expect("Fetch users failed");
 
     Json(users)
+}
+
+pub async fn not_found_handler() -> Json<Response> {
+    let res = Response {
+        message: "URL not found".to_string(),
+    };
+
+    Json(res)
 }

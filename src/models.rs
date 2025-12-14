@@ -14,3 +14,8 @@ pub struct CreateUser {
     pub username: String,
     pub email: String,
 }
+
+#[derive(Serialize)]
+pub struct Response {
+    pub message: String,
+}
