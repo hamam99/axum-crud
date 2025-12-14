@@ -7,6 +7,8 @@ use std::env;
 
 use dotenvy::dotenv;
 
+use crate::db::connect::connect;
+
 #[tokio::main]
 async fn main() {
     dotenv().ok();
@@ -16,7 +18,7 @@ async fn main() {
         Err(_) => "0.0.0.0:3000".to_string(),
     };
 
-    let pool = db::connect().await;
+    let pool = connect().await;
     let app = routes::app_route::create_router(pool);
 
     let listener = tokio::net::TcpListener::bind(port).await.unwrap();
