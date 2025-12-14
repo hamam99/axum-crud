@@ -1,21 +1,24 @@
-use axum::{response::Redirect, routing::get, Json, Router};
+mod db;
+mod handler;
+mod models;
+
+use axum::{response::Redirect, routing::get, Router};
 use dotenvy::dotenv;
-use serde::{Deserialize, Serialize};
-use std::env;
-const BASE_PREFIX: &str = "/axum-test";
+const BASE_PREFIX: &str = "/axum-crud";
+use handler::{create_user, get_all_user};
 
 #[tokio::main]
 async fn main() {
-    dotenv().expect("Failed to read .env");
-    let database_url = match env::var("DATABASE_URL") {
-        Ok(url) => url,
-        Err(_) => "".to_string(),
-    };
-    println!("DATABASE_URL: {}", database_url);
+    dotenv().ok();
+
+    let pool = db::connect().await;
 
     let app = Router::new()
         .route(&format!("{}/", BASE_PREFIX), get(hello_world))
-        // .fallback(handler_redirect);
+        .route(
+            &format!("{}/users", BASE_PREFIX),
+            get(get_all_user).post(create_user).with_state(pool),
+        )
         .fallback("Not Found");
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
     axum::serve(listener, app).await.unwrap()
