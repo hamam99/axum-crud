@@ -30,3 +30,14 @@ curl --location 'http://localhost:3000/axum-crud/users' \
     "email":"test1@gmail.com"
 }'
 ```
+
+
+##Database Structure 
+```
+Table Name : users
+
+Column : 
+- id : uuid
+- username: varchar
+- email : varchar
+```
