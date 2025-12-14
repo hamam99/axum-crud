@@ -16,7 +16,6 @@ async fn main() {
     };
 
     let app = routes::app_route::create_router().await;
-
     let listener = tokio::net::TcpListener::bind(port).await.unwrap();
     axum::serve(listener, app).await.unwrap()
 }
