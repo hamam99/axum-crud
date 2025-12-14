@@ -3,11 +3,8 @@ pub mod handler;
 pub mod models;
 pub mod routes;
 
-use std::env;
-
 use dotenvy::dotenv;
-
-use crate::db::connect::connect;
+use std::env;
 
 #[tokio::main]
 async fn main() {
@@ -18,8 +15,7 @@ async fn main() {
         Err(_) => "0.0.0.0:3000".to_string(),
     };
 
-    let pool = connect().await;
-    let app = routes::app_route::create_router(pool);
+    let app = routes::app_route::create_router().await;
 
     let listener = tokio::net::TcpListener::bind(port).await.unwrap();
     axum::serve(listener, app).await.unwrap()

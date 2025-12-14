@@ -1,12 +1,14 @@
+use crate::db::connect::connect;
 use crate::handler::{
     create_user::create_user, get_all_user::get_all_user, not_found_handler::not_found_handler,
 };
 use axum::{routing::get, Router};
-use sqlx::{Pool, Postgres};
 
 const BASE_PREFIX: &str = "/axum-crud";
 
-pub fn create_router(pool: Pool<Postgres>) -> Router {
+pub async fn create_router() -> Router {
+    let pool: sqlx::Pool<sqlx::Postgres> = connect().await;
+
     Router::new()
         .route(
             &format!("{}/", BASE_PREFIX),
