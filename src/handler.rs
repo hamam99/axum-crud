@@ -1,7 +1,8 @@
-use crate::models::{CreateUser, Response, User};
 use axum::{extract::State, Json};
 use sqlx::PgPool;
 use uuid::Uuid;
+
+use crate::models::{create_user::CreateUser, response::Response, user::User};
 
 pub async fn create_user(
     State(pool): State<PgPool>,
