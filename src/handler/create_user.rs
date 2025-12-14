@@ -21,20 +21,3 @@ pub async fn create_user(
 
     Json(user)
 }
-
-pub async fn get_all_user(State(pool): State<PgPool>) -> Json<Vec<User>> {
-    let users = sqlx::query_as!(User, "SELECT * FROM users")
-        .fetch_all(&pool)
-        .await
-        .expect("Fetch users failed");
-
-    Json(users)
-}
-
-pub async fn not_found_handler() -> Json<Response> {
-    let res = Response {
-        message: "URL not found".to_string(),
-    };
-
-    Json(res)
-}
