@@ -2,7 +2,7 @@ use axum::{extract::State, Json};
 use sqlx::PgPool;
 use uuid::Uuid;
 
-use crate::models::{create_user::CreateUser, response::Response, user::User};
+use crate::models::user::{CreateUser, User};
 
 pub async fn create_user(
     State(pool): State<PgPool>,
@@ -19,5 +19,5 @@ pub async fn create_user(
     .await
     .expect("Create user failed");
 
-    Json(user)
+    return Json(user);
 }

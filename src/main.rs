@@ -6,7 +6,6 @@ pub mod routes;
 use std::env;
 
 use dotenvy::dotenv;
-use routes::app_route::create_router;
 
 #[tokio::main]
 async fn main() {
@@ -18,7 +17,7 @@ async fn main() {
     };
 
     let pool = db::connect().await;
-    let app = create_router(pool);
+    let app = routes::app_route::create_router(pool);
 
     let listener = tokio::net::TcpListener::bind(port).await.unwrap();
     axum::serve(listener, app).await.unwrap()

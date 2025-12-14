@@ -1,6 +1,6 @@
 use axum::Json;
 
-use crate::models::{create_user::CreateUser, response::Response, user::User};
+use crate::models::response::Response;
 
 pub async fn not_found_handler() -> Json<Response> {
     let res = Response {
