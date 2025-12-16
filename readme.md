@@ -31,6 +31,22 @@ curl --location 'http://localhost:3000/axum-crud/users' \
 }'
 ```
 
+### Get Current User
+```
+curl --location 'http://localhost:3000/axum-crud/users/11517aca-d487-424c-9ea7-187155261481' \
+--header 'Content-Type: application/json'
+```
+
+### Update User
+```
+curl --location --request GET 'http://localhost:3000/axum-crud/users/11517aca-d487-424c-9ea7-187155261481' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "username": "hamam Test",
+    "email": "hamam2@gmail.com"
+}'
+```
+
 
 ##Database Structure 
 ```
@@ -41,3 +57,4 @@ Column :
 - username: varchar
 - email : varchar
 ```
+
