@@ -1,8 +1,10 @@
 use crate::db::connect::connect;
+use crate::handler::update_user::{self, update_user};
 use crate::handler::{
     create_user::create_user, get_all_user::get_all_user, get_user_by_id::get_user_by_id,
     not_found_handler::not_found_handler,
 };
+use axum::routing::{patch, put};
 use axum::{routing::get, Router};
 
 const BASE_PREFIX: &str = "/axum-crud";
@@ -20,6 +22,10 @@ pub async fn create_router() -> Router {
         .route(
             &format!("{}/users/{{id}}", BASE_PREFIX),
             get(get_user_by_id).with_state(pool.clone()),
+        )
+        .route(
+            &format!("{}/users/{{id}}", BASE_PREFIX),
+            patch(update_user).with_state(pool.clone()),
         )
         .fallback(not_found_handler)
 }
